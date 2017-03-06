@@ -1,0 +1,28 @@
+{
+  "name": "full-name-splitter",
+  "version": "1.0.0",
+  "description": "Splits a string containing a (Western) person's full name into first and last name components",
+  "main": "lib/full-name-splitter.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "prepublish": "babel -d lib/ src/",
+    "test-syntax": "echo $'\\e[33m';jshint src/ test/src/ && echo $'\\e[32mjshint loves you.\\e[0m' || echo $'\\e[41mjshint is not happy.\\e[0m'" ,
+    "test-functional": "mocha --compilers js:babel-core/register test/src/*",
+    "test": "npm run test-syntax;npm run test-functional"
+  },
+  "author": [
+    "Ruby originally by Pavel Gorbokon <pahanix@gmail.com>",
+    "Ruby contributors Michael S. Klishin and Trevor Creech",
+    "JavaScript port by Matt Dolan <mdolan@trello.com>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-preset-es2015": "^6.22.0",
+    "jshint": "^2.9.4",
+    "mocha": "^3.2.0"
+  }
+}
