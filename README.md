@@ -56,6 +56,16 @@ splitter("John, Quincy Adams")
 // => ["John", "Quincy Adams"]
 ```
 
+## Usage
+
+The ES6 source (in `src/`) is transpiled by Babel into `lib/` in the npm `prepublish` hook.
+
+If you're not using this from npm, you'll need to manually trigger transpilation:
+
+```bash
+npm install && npm run prepublish
+```
+
 ## Copyright
 
 [Original Ruby version](https://github.com/pahanix/full-name-splitter) created by Pavel Gorbokon, with contributions by Michael S. Klishin and Trevor Creech.
