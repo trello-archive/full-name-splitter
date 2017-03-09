@@ -3,6 +3,7 @@ import splitter from './../../src/full-name-splitter.js';
 
 const expectations = [
   ["John Smith", ["John", "Smith" ]],
+  ["John", ["John", null]],
 
   ["Kevin J. O'Connor", ["Kevin J.", "O'Connor" ]],
   ["Gabriel Van Helsing", ["Gabriel", "Van Helsing" ]],
@@ -56,19 +57,57 @@ const expectations = [
   ["Johan de heer Van Kampen", ["Johan", "de heer Van Kampen" ]],
   ["Han Van De Casteele", ["Han", "Van De Casteele" ]],
   ["Han Vande Casteele", ["Han", "Vande Casteele" ]],
+  ["Albert Van Der Haart", ["Albert", "Van Der Haart"]],
 
   // Exceptions?
   // the architect Ludwig Mies van der Rohe, from the West German city of Aachen, was originally Ludwig Mies;
   ["Ludwig Mies van der Rohe", ["Ludwig", "Mies van der Rohe" ]],
 
+  ["E. Mark Slater", ["E. Mark", "Slater"]],
+  ["Ken E. Mark Slater", ["Ken E. Mark", "Slater"]],
+  ["Lord Sebastian Coe", ["Sebastian", "Coe"]],
+  ["King Richard V", ["King", "Richard"]],
+  ["Dr Who", [null, "Who"]],
+  ["Mr Van", [null, "Van"]],
+  ["Marie-Anne Richmond-Smithe", ["Marie-Anne", "Richmond-Smithe"]],
+
   // Test ignoring unnecessary whitespaces
   ["\t Ludwig  Mies\t van der Rohe ", ["Ludwig", "Mies van der Rohe" ]],
   ["\t van  der Rohe,\t Ludwig  Mies ", ["Ludwig Mies", "van der Rohe" ]],
   ["\t Ludwig      ", ["Ludwig", null]],
-  ["  van  helsing ", [null, "van helsing" ]],
+  ["  van  helsing ", [null, "van helsing"]],
   [", van  helsing ", ["van helsing", null]],
   ["\t van  der Rohe,\t Ludwig  Mies ", ["Ludwig Mies", "van der Rohe" ]],
 
+  // from humanparser
+  ['Mr. William R. Hearst, III', ['William R.', 'Hearst']],
+  ['William Randolph Hearst', ['William Randolph', 'Hearst']],
+  ['William R. De La Cruz', ['William R.', 'De La Cruz']],
+  ['Mr. William R. De La Cruz III', ['William R.', 'De La Cruz']],
+  ['William De Cruz', ['William', 'De Cruz']],
+  ['William De La Cruz', ['William', 'De La Cruz']],
+  ['William A. B. De La Cruz', ['William A. B.', 'De La Cruz']],
+  ['James Hugh Calum Laurie', ['James Hugh Calum', 'Laurie']],
+  ['Kiefer William Frederick Dempsey George Rufus Sutherland',
+      ['Kiefer William Frederick Dempsey George Rufus', 'Sutherland']],
+  ['William Hearst', ['William', 'Hearst']],
+  ['William Hearst Jr', ['William', 'Hearst']],
+  ['Hearst, William Jr', ['William', 'Hearst']],
+  ['Hearst, William Randolph', ['William Randolph', 'Hearst']],
+  ['Hearst, William, M.D.', ['William', 'Hearst']],
+  ['William', ['William', null]],
+  ['',  [null, null]],
+
+  // from humanname
+  ["John Doe", ["John", "Doe"]],
+  ["Mr Anthony R Von Fange III", ["Anthony R", "Von Fange"]],
+  ["Sara Ann Fraser", ["Sara Ann", "Fraser"]],
+  ["Adam", ["Adam", null]],
+  ["Jonathan Smith", ["Jonathan", "Smith"]],
+  ["Anthony Von Fange III", ["Anthony", "Von Fange"]],
+  ["Mr John Doe", ["John", "Doe"]],
+  ["Smarty Pants Phd", ["Smarty", "Pants"]],
+  ["Mark P Williams", ["Mark P", "Williams"]]
 ];
 
 describe('full-name-splitter', function() {
