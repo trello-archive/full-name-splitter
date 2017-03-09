@@ -22,7 +22,10 @@
     "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-preset-es2015": "^6.22.0",
+    "humanname": "^0.2.2",
+    "humanparser": "^1.1.1",
     "jshint": "^2.9.4",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "parse-full-name": "^1.2.3"
   }
 }

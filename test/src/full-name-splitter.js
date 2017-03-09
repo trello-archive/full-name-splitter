@@ -1,5 +1,8 @@
 import assert from 'assert';
 import splitter from './../../src/full-name-splitter.js';
+import humanparser from 'humanparser';
+import humanname from 'humanname';
+import { parseFullName } from 'parse-full-name';
 
 const expectations = [
   ["John Smith", ["John", "Smith" ]],
@@ -110,12 +113,50 @@ const expectations = [
   ["Mark P Williams", ["Mark P", "Williams"]]
 ];
 
+function assertNames(first, last, expected) {
+  const message = `${JSON.stringify([first, last])} should be ${JSON.stringify(expected)}`;
+  assert((first||'') == (expected[0]||''), message);
+  assert((last||'') == (expected[1]||''), message);
+}
+
 describe('full-name-splitter', function() {
   expectations.forEach( ([fullName, expected]) => {
     it(`${fullName} should split to [${expected[0]}, ${expected[1]}]`, function() {
       const split = splitter(fullName);
-      assert(split[0] == expected[0]);
-      assert(split[1] == expected[1]);
+      assertNames(split[0], split[1], expected);
+    });
+  });
+});
+
+describe('humanparser', function() {
+  expectations.forEach( ([fullName, expected]) => {
+    it(`${fullName} should split to [${expected[0]}, ${expected[1]}]`, function() {
+      const split = humanparser.parseName(fullName);
+      let first = `${split.firstName} ${split.middleName||''}`.trim();
+      let last = split.lastName;
+      assertNames(first, last, expected);
+    });
+  });
+});
+
+describe('humanname', function() {
+  expectations.forEach( ([fullName, expected]) => {
+    it(`${fullName} should split to [${expected[0]}, ${expected[1]}]`, function() {
+      const split = humanname.parse(fullName);
+      let first = `${split.firstName} ${split.initials||''}`.trim();
+      let last = split.lastName;
+      assertNames(first, last, expected);
+    });
+  });
+});
+
+describe('parse-full-name', function() {
+  expectations.forEach( ([fullName, expected]) => {
+    it(`${fullName} should split to [${expected[0]}, ${expected[1]}]`, function() {
+      const split = parseFullName(fullName);
+      let first = `${split.first} ${split.middle||''}`.trim();
+      let last = split.last;
+      assertNames(first, last, expected);
     });
   });
 });
