@@ -62,18 +62,13 @@ describe('full-name-splitter', function() {
     // the architect Ludwig Mies van der Rohe, from the West German city of Aachen, was originally Ludwig Mies;
     ["Ludwig Mies van der Rohe", ["Ludwig", "Mies van der Rohe" ]],
 
-    // If comma is provided then split by comma
-
-    ["John, Quincy Adams", ["John", "Quincy Adams" ]],
-    ["Ludwig Mies, van der Rohe", ["Ludwig Mies", "van der Rohe" ]],
-
     // Test ignoring unnecessary whitespaces
     ["\t Ludwig  Mies\t van der Rohe ", ["Ludwig", "Mies van der Rohe" ]],
-    ["\t Ludwig  Mies,\t van  der Rohe ", ["Ludwig Mies", "van der Rohe" ]],
+    ["\t van  der Rohe,\t Ludwig  Mies ", ["Ludwig Mies", "van der Rohe" ]],
     ["\t Ludwig      ", ["Ludwig", null]],
     ["  van  helsing ", [null, "van helsing" ]],
-    [", van  helsing ", [null, "van helsing" ]],
-    ["\t Ludwig  Mies,\t van  der Rohe ", ["Ludwig Mies", "van der Rohe" ]],
+    [", van  helsing ", ["van helsing", null]],
+    ["\t van  der Rohe,\t Ludwig  Mies ", ["Ludwig Mies", "van der Rohe" ]],
 
   ];
 

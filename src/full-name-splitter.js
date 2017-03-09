@@ -46,7 +46,7 @@ const tokenizeFullName = function (fullName) {
       // ",van helsing" produces  ["", "van helsing"]
       .split(/\s*,\s*/, 2)
       // but it should be [null, "van helsing"] by lib convention
-      .map(u => u || null);
+      .map(u => u || null).reverse();
   } else {
     return fullName.split(/\s+/);
   }
