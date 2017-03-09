@@ -10,7 +10,9 @@ const SALUTATION_REGEX =
 
 const isLastNamePrefix = (token) =>
   LAST_NAME_PREFIXES.indexOf(token.toLowerCase()) != -1;
+
 const isSalutation = (token) => token && token.match(SALUTATION_REGEX);
+
 // M or W.
 const isInitial = (token) => token.match(/^\w\.?$/);
 
@@ -36,8 +38,8 @@ const adjust_exceptions = function (firstNames, lastNames) {
 
   return [firstNames, lastNames];
 };
-const tokenizeFullName = function (fullName) {
 
+const tokenizeFullName = function (fullName) {
   fullName = fullName.trim().replace(/\s+/g, ' ')
     .replace(SUFFIX_REGEX, '');
 
@@ -53,10 +55,8 @@ const tokenizeFullName = function (fullName) {
 };
 
 export default function (fullName) {
-  let token, tokens;
-
-  tokens = tokenizeFullName(fullName);
-
+  let token;
+  let tokens = tokenizeFullName(fullName);
   let firstNames = [];
   let lastNames = [];
 
