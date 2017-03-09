@@ -1,9 +1,16 @@
-const PREFIXES = ['de', 'da', 'la', 'du', 'del', 'dei', 'vda.', 'dello',
-  'della', 'degli', 'delle', 'van', 'von', 'der', 'den', 'heer', 'ten', 'ter',
-  'vande', 'vanden', 'vander', 'voor', 'ver', 'aan', 'mc'];
+const LAST_NAME_PREFIXES = ['de', 'da', 'la', 'du', 'del', 'dei', 'vda.',
+  'dello', 'della', 'degli', 'delle', 'van', 'von', 'der', 'den', 'heer',
+  'ten', 'ter', 'vande', 'vanden', 'vander', 'voor', 'ver', 'aan', 'mc'];
 
-const isPrefix = (token) => PREFIXES.indexOf(token.toLowerCase()) != -1;
+const SUFFIX_REGEX =
+  /,? +(i{1,3}|iv|vi{0,3}|s(enio)?r|j(unio)?r|phd|apr|rph|pe|md|ma|dmd|cme)$/i;
 
+const SALUTATION_REGEX =
+  /^(mrs?|m[ia]ster|miss|ms|d(octo)?r|prof|rev|fr|judge|honorable|hon|lord|lady)\.?$/i;
+
+const isLastNamePrefix = (token) =>
+  LAST_NAME_PREFIXES.indexOf(token.toLowerCase()) != -1;
+const isSalutation = (token) => token && token.match(SALUTATION_REGEX);
 // M or W.
 const isInitial = (token) => token.match(/^\w\.?$/);
 
@@ -19,6 +26,7 @@ const adjust_exceptions = function (firstNames, lastNames) {
   // "Rosa María Pérez Martínez Vda. de la Cruz"
   //   => ["Rosa María", "Pérez Martínez Vda. de la Cruz"]
   if (firstNames.length > 1 &&
+      !isInitial(firstNames[firstNames.length-1]) &&
       lastNames.join(' ').match(/^(van der|(vda\. )?de la \w+$)/i)) {
     while (1) {
       lastNames.unshift(firstNames.pop());
@@ -30,7 +38,8 @@ const adjust_exceptions = function (firstNames, lastNames) {
 };
 const tokenizeFullName = function (fullName) {
 
-  fullName = fullName.trim().replace(/\s+/g, ' ');
+  fullName = fullName.trim().replace(/\s+/g, ' ')
+    .replace(SUFFIX_REGEX, '');
 
   if (fullName.indexOf(',') != -1) {
     return fullName
@@ -50,8 +59,9 @@ export default function (fullName) {
 
   let firstNames = [];
   let lastNames = [];
+
   while ((token = tokens.shift())) {
-    if (isPrefix(token) || hasApostrophe(token) ||
+    if (isLastNamePrefix(token) || hasApostrophe(token) ||
         (firstNames.length && tokens.length === 0 && !isInitial(token))) {
       lastNames.push(token);
       break;
@@ -61,6 +71,9 @@ export default function (fullName) {
   }
   lastNames = lastNames.concat(tokens);
 
+  if (isSalutation(firstNames[0])) {
+    firstNames.shift();
+  }
   [firstNames, lastNames] = adjust_exceptions(firstNames, lastNames);
 
   return [

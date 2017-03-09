@@ -6,11 +6,7 @@ As that article advises, it's ideal to just store a user's full name, and not as
 
 However, there are times when it is necessary to have a split given name and family name. Such as when integrating with another system that made different design choices.
 
-This package does a best-guess attempt to split a full name string into given name and family name. For many Western names, it will get it right. It knows about some common family name prefixes used in many European-language names, and initials.
-
-It'll do a better job than naïvely splitting off the first or last word.
-
-Just don't expect it to be accurate for all names!
+This package does a best-guess attempt to split a full name string into given name and family name. For many Western names, it will get it right. It knows about some common family name prefixes used in many European-language names, and initials. It removes salutations (`Miss`, `Doctor`, etc) and suffixes (`III`, `Jr`, etc).
 
 ## Examples
 
