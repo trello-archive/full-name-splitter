@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "preversion": "npm run test",
     "prepublish": "babel -d lib/ src/",
     "test-syntax": "echo $'\\e[33m';jshint src/ test/src/ && echo $'\\e[32mjshint loves you.\\e[0m' || echo $'\\e[41mjshint is not happy.\\e[0m'",
     "test-functional": "mocha --compilers js:babel-core/register test/src/*",
